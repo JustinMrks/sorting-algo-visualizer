@@ -40,13 +40,28 @@ function App() {
     }
   };
 
+  const selectionSort = (arry) => {
+    let arr = [...arry];
+    let n = arr.length;
+    for (let i = 0; i < n - 1; ++i) {
+      let min_index = i;
+      for (let j = i + 1; j < n; ++j) {
+        if (arr[j] < arr[min_index]) min_index = j;
+      }
+      let temp = arr[i];
+      arr[i] = arr[min_index];
+      arr[min_index] = temp;
+      setArray(arr);
+    }
+  };
+
   const sortArray = () => {
     switch (algo) {
       case 'bubble':
         bubbleSort(array);
         break;
       case 'selection':
-        console.log('selection sort');
+        selectionSort(array);
         break;
       case 'insertion':
         console.log('insertion sort');
@@ -56,7 +71,7 @@ function App() {
     }
   };
 
-  useEffect(() => constructArray(), []);
+  useEffect(() => constructArray(), [arraySize]);
 
   return (
     <div className="App">
