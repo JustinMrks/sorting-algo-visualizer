@@ -41,7 +41,7 @@ function App() {
     return swaps;
   };
 
-  const animateBubble = (swaps, arr) => {
+  const animate = (swaps, arr) => {
     if (swaps.length === 0) {
       return;
     }
@@ -49,11 +49,12 @@ function App() {
     [arr[i], arr[j]] = [arr[j], arr[i]];
     setArray([...arr]);
     setTimeout(() => {
-      animateBubble(swaps, arr);
+      animate(swaps, arr);
     }, 10);
   };
 
   const selectionSort = (arry) => {
+    let swaps = [];
     let arr = [...arry];
     let n = arr.length;
     for (let i = 0; i < n - 1; ++i) {
@@ -61,11 +62,12 @@ function App() {
       for (let j = i + 1; j < n; ++j) {
         if (arr[j] < arr[min_index]) min_index = j;
       }
+      swaps.push([i, min_index]);
       let temp = arr[i];
       arr[i] = arr[min_index];
       arr[min_index] = temp;
-      setArray(arr);
     }
+    return swaps;
   };
 
   const insertionSort = (arry) => {
@@ -77,10 +79,11 @@ function App() {
     switch (algo) {
       case 'bubble':
         let swaps = bubbleSort(array);
-        animateBubble(swaps, array);
+        animate(swaps, array);
         break;
       case 'selection':
-        selectionSort(array);
+        let swapz = selectionSort(array);
+        animate(swapz, array);
         break;
       case 'insertion':
         console.log('insertion sort');
