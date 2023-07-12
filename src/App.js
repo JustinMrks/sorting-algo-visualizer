@@ -41,20 +41,16 @@ function App() {
     return swaps;
   };
 
-  const animateBubble = (swaps) => {
-    let arr = [...array];
+  const animateBubble = (swaps, arr) => {
     if (swaps.length === 0) {
       return;
     }
     const [i, j] = swaps.shift();
-    let temp = arr[j];
-    arr[j] = arr[i];
-    arr[i] = temp;
-    setArray(arr);
-    console.log(arr);
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    setArray([...arr]);
     setTimeout(() => {
-      animateBubble(swaps);
-    }, 100);
+      animateBubble(swaps, arr);
+    }, 10);
   };
 
   const selectionSort = (arry) => {
@@ -81,7 +77,7 @@ function App() {
     switch (algo) {
       case 'bubble':
         let swaps = bubbleSort(array);
-        animateBubble(swaps);
+        animateBubble(swaps, array);
         break;
       case 'selection':
         selectionSort(array);
