@@ -22,7 +22,7 @@ function App() {
 
   const bubbleSort = (arry) => {
     let arr = [...arry];
-
+    let swaps = [];
     for (let i = 0; i < arr.length; i++) {
       // Last i elements are already in place so
       // you dont need to keep iterating over them
@@ -31,13 +31,30 @@ function App() {
         // is greater than the next position
         if (arr[j] > arr[j + 1]) {
           // If the current position > next position then swap them
+          swaps.push([j, j + 1]);
           let temp = arr[j];
           arr[j] = arr[j + 1];
           arr[j + 1] = temp;
-          setArray(arr);
         }
       }
     }
+    return swaps;
+  };
+
+  const animateBubble = (swaps) => {
+    let arr = [...array];
+    if (swaps.length === 0) {
+      return;
+    }
+    const [i, j] = swaps.shift();
+    let temp = arr[j];
+    arr[j] = arr[i];
+    arr[i] = temp;
+    setArray(arr);
+    console.log(arr);
+    setTimeout(() => {
+      animateBubble(swaps);
+    }, 100);
   };
 
   const selectionSort = (arry) => {
@@ -55,10 +72,16 @@ function App() {
     }
   };
 
+  const insertionSort = (arry) => {
+    let arr = [...arry];
+    let n = arr.length;
+  };
+
   const sortArray = () => {
     switch (algo) {
       case 'bubble':
-        bubbleSort(array);
+        let swaps = bubbleSort(array);
+        animateBubble(swaps);
         break;
       case 'selection':
         selectionSort(array);
