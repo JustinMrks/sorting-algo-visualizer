@@ -20,6 +20,18 @@ function App() {
     );
   };
 
+  const animate = (swaps, arr, mil) => {
+    if (swaps.length === 0) {
+      return;
+    }
+    const [i, j] = swaps.shift();
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    setArray([...arr]);
+    setTimeout(() => {
+      animate(swaps, arr, mil);
+    }, mil);
+  };
+
   const bubbleSort = (arry) => {
     let arr = [...arry];
     let swaps = [];
@@ -41,18 +53,6 @@ function App() {
     return swaps;
   };
 
-  const animate = (swaps, arr) => {
-    if (swaps.length === 0) {
-      return;
-    }
-    const [i, j] = swaps.shift();
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-    setArray([...arr]);
-    setTimeout(() => {
-      animate(swaps, arr);
-    }, 10);
-  };
-
   const selectionSort = (arry) => {
     let swaps = [];
     let arr = [...arry];
@@ -71,22 +71,38 @@ function App() {
   };
 
   const insertionSort = (arry) => {
+    let swaps = [];
     let arr = [...arry];
     let n = arr.length;
+    for (let i = 1; i < n; i++) {
+      // Choosing the first element in our unsorted subarray
+      let current = arr[i];
+      // The last element of our sorted subarray
+      let j = i - 1;
+      while (j > -1 && current < arr[j]) {
+        arr[j + 1] = arr[j];
+        swaps.push([j, j + 1]);
+        j--;
+      }
+      arr[j + 1] = current;
+      // swaps.push([j, i]);
+    }
+    return swaps;
   };
 
   const sortArray = () => {
     switch (algo) {
       case 'bubble':
         let swaps = bubbleSort(array);
-        animate(swaps, array);
+        animate(swaps, array, 5);
         break;
       case 'selection':
         let swapz = selectionSort(array);
-        animate(swapz, array);
+        animate(swapz, array, 100);
         break;
       case 'insertion':
-        console.log('insertion sort');
+        let thwaps = insertionSort(array);
+        animate(thwaps, array, 20);
         break;
       default:
         console.log('select an algorithm');
